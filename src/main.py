@@ -3,15 +3,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise import Tortoise
-from workers import WorkerEntrypoint
 
 from src.routes import api_router
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        import asgi
-
-        return await asgi.fetch(app, request.js_object, self.env)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
